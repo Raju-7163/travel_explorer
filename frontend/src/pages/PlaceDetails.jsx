@@ -2,6 +2,8 @@ import { ArrowLeft, ExternalLink, ImageOff, MapPin, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import FavoriteButton from "../components/FavoriteButton.jsx";
+import NearbyHotels from "../components/NearbyHotels.jsx";
+import WeatherWidget from "../components/WeatherWidget.jsx";
 import { getTouristPlaceDetails } from "../services/openTripMap.js";
 
 export default function PlaceDetails() {
@@ -95,33 +97,41 @@ export default function PlaceDetails() {
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_360px] lg:px-8">
-        <div className="rounded-lg border border-white/60 bg-white/75 p-6 shadow-soft backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70">
-          <h2 className="text-2xl font-extrabold text-slate-950 dark:text-white">About this place</h2>
-          <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">{place.description}</p>
-          {place.sourceUrl ? (
-            <a
-              href={place.sourceUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-md bg-saffron px-4 py-3 text-sm font-bold text-white hover:bg-orange-600"
-            >
-              Open Source Page
-              <ExternalLink size={16} />
-            </a>
-          ) : null}
+        <div>
+          <div className="rounded-lg border border-white/60 bg-white/75 p-6 shadow-soft backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70">
+            <h2 className="text-2xl font-extrabold text-slate-950 dark:text-white">About this place</h2>
+            <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">{place.description}</p>
+            {place.sourceUrl ? (
+              <a
+                href={place.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-6 inline-flex items-center gap-2 rounded-md bg-saffron px-4 py-3 text-sm font-bold text-white hover:bg-orange-600"
+              >
+                Open Source Page
+                <ExternalLink size={16} />
+              </a>
+            ) : null}
+          </div>
+
+          <NearbyHotels coordinates={place.coordinates} />
         </div>
 
-        <aside className="rounded-lg border border-white/60 bg-white/75 p-6 shadow-soft backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70">
-          <h2 className="text-xl font-extrabold text-slate-950 dark:text-white">Coordinates</h2>
-          <div className="mt-4 grid gap-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
-            <span className="inline-flex items-center gap-2 rounded-md bg-stone-50 px-3 py-3 dark:bg-slate-950">
-              <MapPin size={16} className="text-saffron" />
-              Latitude: {place.coordinates.latitude ?? "N/A"}
-            </span>
-            <span className="rounded-md bg-stone-50 px-3 py-3 dark:bg-slate-950">
-              Longitude: {place.coordinates.longitude ?? "N/A"}
-            </span>
-          </div>
+        <aside className="space-y-6">
+          <WeatherWidget coordinates={place.coordinates} />
+
+          <section className="rounded-lg border border-white/60 bg-white/75 p-6 shadow-soft backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70">
+            <h2 className="text-xl font-extrabold text-slate-950 dark:text-white">Coordinates</h2>
+            <div className="mt-4 grid gap-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
+              <span className="inline-flex items-center gap-2 rounded-md bg-stone-50 px-3 py-3 dark:bg-slate-950">
+                <MapPin size={16} className="text-saffron" />
+                Latitude: {place.coordinates.latitude ?? "N/A"}
+              </span>
+              <span className="rounded-md bg-stone-50 px-3 py-3 dark:bg-slate-950">
+                Longitude: {place.coordinates.longitude ?? "N/A"}
+              </span>
+            </div>
+          </section>
         </aside>
       </section>
     </article>

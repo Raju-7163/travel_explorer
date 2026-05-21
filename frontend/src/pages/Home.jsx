@@ -64,6 +64,9 @@ export default function Home() {
           src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1800&q=85"
           alt="Taj Mahal reflected in water"
           className="absolute inset-0 -z-20 h-full w-full object-cover"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950/90 via-slate-950/55 to-orange-950/30" />
 
@@ -168,6 +171,8 @@ export default function Home() {
                   src={destination.image}
                   alt={destination.title}
                   className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
                 <div className="absolute bottom-0 p-5 text-white">
@@ -207,9 +212,15 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ delay: index * 0.08, duration: 0.55 }}
-                className="overflow-hidden rounded-lg border border-white/50 bg-white/65 shadow-soft backdrop-blur-xl transition hover:-translate-y-1 dark:border-white/10 dark:bg-slate-950/45"
+                className="overflow-hidden rounded-lg border border-white/50 bg-white/65 shadow-soft backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-white/10 dark:bg-slate-950/45"
               >
-                <img src={place.image} alt={place.title} className="h-56 w-full object-cover" />
+                <img
+                  src={place.image}
+                  alt={place.title}
+                  className="h-56 w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="p-6">
                   <div className="flex items-center gap-2 text-sm font-semibold text-saffron">
                     <Star size={16} />
@@ -229,6 +240,8 @@ export default function Home() {
           src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1600&q=85"
           alt="Indian coastline with palm trees"
           className="absolute inset-0 -z-20 h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
         />
         <div className="absolute inset-0 -z-10 bg-slate-950/70" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

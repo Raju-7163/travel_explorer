@@ -1,15 +1,16 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { Heart, LogOut, Menu, Moon, Sun, User, X } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
+import { useHomeSectionNavigation } from "../hooks/useHomeSectionNavigation.js";
 
-const navItems = [
-  { label: "Home", to: "/" },
-  { label: "Destinations", to: "/#destinations" },
-  { label: "Places", to: "/#places" },
-  { label: "About", to: "/#about" }
+const sectionNavItems = [
+  { label: "Destinations", sectionId: "destinations" },
+  { label: "Places", sectionId: "places" },
+  { label: "About", sectionId: "about" }
 ];
 
 export default function Navbar() {
@@ -17,14 +18,21 @@ export default function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const navigateToHomeSection = useHomeSectionNavigation();
 
   async function handleLogout() {
     try {
       await logout();
+      toast.success("Logged out");
       navigate("/");
     } catch {
       toast.error("Logout failed");
     }
+  }
+
+  function handleSectionClick(sectionId) {
+    setIsOpen(false);
+    navigateToHomeSection(sectionId);
   }
 
   return (
@@ -40,14 +48,21 @@ export default function Navbar() {
         </NavLink>
 
         <div className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => (
-            <NavLink
+          <NavLink
+            to="/"
+            className="text-sm font-semibold text-slate-600 transition hover:text-forest dark:text-slate-300 dark:hover:text-white"
+          >
+            Home
+          </NavLink>
+          {sectionNavItems.map((item) => (
+            <button
               key={item.label}
-              to={item.to}
+              type="button"
+              onClick={() => handleSectionClick(item.sectionId)}
               className="text-sm font-semibold text-slate-600 transition hover:text-forest dark:text-slate-300 dark:hover:text-white"
             >
               {item.label}
-            </NavLink>
+            </button>
           ))}
         </div>
 
@@ -112,72 +127,89 @@ export default function Navbar() {
             onClick={() => setIsOpen((current) => !current)}
             className="grid h-10 w-10 place-items-center rounded-md border border-slate-200 bg-white/70 text-slate-700 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-200"
             aria-label="Toggle navigation menu"
+            aria-expanded={isOpen}
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </nav>
-      {isOpen ? (
-        <div className="border-t border-slate-200 bg-white/95 px-4 py-4 backdrop-blur-xl md:hidden dark:border-slate-800 dark:bg-slate-950/95">
-          <div className="mx-auto grid max-w-7xl gap-3">
-            {navItems.map((item) => (
+
+      <AnimatePresence>
+        {isOpen ? (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.18 }}
+            className="border-t border-slate-200 bg-white/95 px-4 py-4 backdrop-blur-xl md:hidden dark:border-slate-800 dark:bg-slate-950/95"
+          >
+            <div className="mx-auto grid max-w-7xl gap-3">
               <NavLink
-                key={item.label}
-                to={item.to}
+                to="/"
                 onClick={() => setIsOpen(false)}
                 className="rounded-md px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
               >
-                {item.label}
+                Home
               </NavLink>
-            ))}
-            {isAuthenticated ? (
-              <>
-                <NavLink
-                  to="/favorites"
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-md px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
-                >
-                  Favorites
-                </NavLink>
-                <NavLink
-                  to="/profile"
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-md px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
-                >
-                  Profile
-                </NavLink>
+              {sectionNavItems.map((item) => (
                 <button
+                  key={item.label}
                   type="button"
-                  onClick={() => {
-                    setIsOpen(false);
-                    handleLogout();
-                  }}
-                  className="rounded-md px-3 py-2 text-left text-sm font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40"
+                  onClick={() => handleSectionClick(item.sectionId)}
+                  className="rounded-md px-3 py-2 text-left text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
                 >
-                  Logout
+                  {item.label}
                 </button>
-              </>
-            ) : (
-              <>
-                <NavLink
-                  to="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-md px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
-                >
-                  Login
-                </NavLink>
-                <NavLink
-                  to="/register"
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-md bg-saffron px-3 py-2 text-sm font-semibold text-white"
-                >
-                  Register
-                </NavLink>
-              </>
-            )}
-          </div>
-        </div>
-      ) : null}
+              ))}
+              {isAuthenticated ? (
+                <>
+                  <NavLink
+                    to="/favorites"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-md px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
+                  >
+                    Favorites
+                  </NavLink>
+                  <NavLink
+                    to="/profile"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-md px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
+                  >
+                    Profile
+                  </NavLink>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsOpen(false);
+                      handleLogout();
+                    }}
+                    className="rounded-md px-3 py-2 text-left text-sm font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <NavLink
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-md px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
+                  >
+                    Login
+                  </NavLink>
+                  <NavLink
+                    to="/register"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-md bg-saffron px-3 py-2 text-sm font-semibold text-white"
+                  >
+                    Register
+                  </NavLink>
+                </>
+              )}
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }

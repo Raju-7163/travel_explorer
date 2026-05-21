@@ -69,13 +69,19 @@ Also set a JWT secret:
 JWT_SECRET=replace_with_a_long_random_secret
 ```
 
-5. Optional: add an OpenTripMap API key to `frontend/.env` if you want to use OpenTripMap places. Without a key, the app uses Wikimedia's free no-key geosearch API.
+5. Add an OpenWeather API key to `backend/.env` for the place weather widget:
+
+```text
+OPENWEATHER_API_KEY=replace_with_your_openweather_key
+```
+
+6. Optional: add an OpenTripMap API key to `frontend/.env` if you want to use OpenTripMap places. Without a key, the app uses Wikimedia's free no-key geosearch API.
 
 ```text
 VITE_OPENTRIPMAP_API_KEY=
 ```
 
-6. Run both apps:
+7. Run both apps:
 
 ```bash
 npm run dev
@@ -103,7 +109,9 @@ Routes:
 - `POST /auth/logout` - clear auth cookie
 - `GET /auth/me` - current user profile, protected
 - `PUT /auth/me` - update current user profile, protected
+- `GET /hotels/nearby?lat=28.6139&lon=77.2090` - nearby hotels from OpenStreetMap data
 - `/places` - place CRUD routes
+- `GET /weather/current?lat=28.6139&lon=77.2090` - current OpenWeather conditions
 - `/trips` - trip CRUD routes
 - `/users` - user CRUD routes
 

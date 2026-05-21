@@ -28,6 +28,7 @@ export default function Login() {
     try {
       setIsSubmitting(true);
       await login(form);
+      toast.success("Welcome back");
       navigate(location.state?.from?.pathname || "/profile", { replace: true });
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
@@ -64,6 +65,8 @@ export function AuthShell({ title, subtitle, children }) {
         src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1600&q=85"
         alt="India tourism"
         className="absolute inset-0 -z-20 h-full w-full object-cover opacity-45"
+        loading="eager"
+        decoding="async"
       />
       <div className="absolute inset-0 -z-10 bg-slate-950/70" />
       <motion.div

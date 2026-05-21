@@ -1,13 +1,20 @@
 import { Compass, ImageOff, MapPin, Star } from "lucide-react";
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import FavoriteButton from "./FavoriteButton.jsx";
 
-export default function TouristPlaceCard({ place }) {
+function TouristPlaceCard({ place }) {
   return (
-    <article className="overflow-hidden rounded-lg border border-white/50 bg-white/70 shadow-soft backdrop-blur-xl transition hover:-translate-y-1 dark:border-white/10 dark:bg-slate-950/45">
+    <article className="overflow-hidden rounded-lg border border-white/50 bg-white/70 shadow-soft backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-white/10 dark:bg-slate-950/45">
       <div className="relative">
         {place.image ? (
-          <img src={place.image} alt={place.name} className="h-56 w-full object-cover" />
+          <img
+            src={place.image}
+            alt={place.name}
+            className="h-56 w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
         ) : (
           <div className="grid h-56 place-items-center bg-gradient-to-br from-slate-200 to-orange-100 text-slate-500 dark:from-slate-800 dark:to-slate-900 dark:text-slate-400">
             <ImageOff size={34} />
@@ -49,3 +56,5 @@ export default function TouristPlaceCard({ place }) {
     </article>
   );
 }
+
+export default memo(TouristPlaceCard);
