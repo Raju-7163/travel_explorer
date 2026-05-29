@@ -17,13 +17,13 @@ export default function AppRoutes() {
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/places/:xid" element={<PlaceDetails />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route index element={<Home />} />
+          <Route path="places/:xid" element={<PlaceDetails />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="favorites" element={<Favorites />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>

@@ -1,18 +1,27 @@
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function useHomeSectionNavigation() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return useCallback(
     (sectionId = "") => {
-      const hash = sectionId ? `#${sectionId}` : "";
+      const scrollTo = sectionId || undefined;
+      const isAlreadyHome = location.pathname === "/";
 
-      navigate({
-        pathname: "/",
-        hash
-      });
+      if (isAlreadyHome && location.state?.scrollTo === scrollTo) {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      navigate(
+        "/",
+        isAlreadyHome
+          ? { state: { scrollTo }, replace: false }
+          : { state: { scrollTo, from: location } }
+      );
     },
-    [navigate]
+    [location, navigate]
   );
 }

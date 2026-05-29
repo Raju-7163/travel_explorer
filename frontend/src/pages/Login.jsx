@@ -29,7 +29,7 @@ export default function Login() {
       setIsSubmitting(true);
       await login(form);
       toast.success("Welcome back");
-      navigate(location.state?.from?.pathname || "/profile", { replace: true });
+      navigate(location.state?.from ?? "/profile", { replace: true });
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
     } finally {

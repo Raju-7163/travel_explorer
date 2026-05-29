@@ -33,7 +33,9 @@ export async function getCurrentWeather({ latitude, longitude }) {
     }
 
     if (!error.response) {
-      return getFallbackWeather("Backend weather service is not reachable.");
+      return getFallbackWeather(
+        error.message || "Backend weather service is not reachable. Run `npm run dev` from the project root."
+      );
     }
 
     return getFallbackWeather(error.response?.data?.message || "Unable to load weather right now.");

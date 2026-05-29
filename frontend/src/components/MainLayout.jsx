@@ -1,22 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer.jsx";
 import Navbar from "./Navbar.jsx";
+import ScrollRestoration from "./ScrollRestoration.jsx";
 
 export default function MainLayout() {
   const location = useLocation();
-
-  useEffect(() => {
-    if (location.hash) {
-      window.requestAnimationFrame(() => {
-        document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-      return;
-    }
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [location.pathname, location.hash]);
+  const pageKey = `${location.pathname}${location.search}`;
 
   function skipToContent() {
     const main = document.getElementById("main-content");
@@ -26,6 +16,7 @@ export default function MainLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <ScrollRestoration />
       <button
         type="button"
         onClick={skipToContent}
@@ -37,7 +28,7 @@ export default function MainLayout() {
       <main id="main-content" tabIndex={-1} className="flex-1">
         <AnimatePresence mode="wait">
           <motion.div
-            key={location.pathname}
+            key={pageKey}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}

@@ -1,5 +1,5 @@
 import { Compass, Home, Search } from "lucide-react";
-import { Link } from "react-router-dom";
+import AppLink from "../components/AppLink.jsx";
 import { useHomeSectionNavigation } from "../hooks/useHomeSectionNavigation.js";
 
 export default function NotFound() {
@@ -26,13 +26,13 @@ export default function NotFound() {
           The page you are looking for does not exist, but there are still plenty of places to explore.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link
+          <AppLink
             to="/"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-saffron px-5 text-sm font-bold text-white transition hover:bg-orange-600"
           >
             <Home size={18} />
             Go home
-          </Link>
+          </AppLink>
           <button
             type="button"
             onClick={() => navigateToHomeSection("destinations")}

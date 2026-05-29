@@ -33,7 +33,7 @@ export default function Register() {
       setIsSubmitting(true);
       await register(form);
       toast.success("Account created");
-      navigate("/profile");
+      navigate("/profile", { replace: true });
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");
     } finally {

@@ -35,6 +35,101 @@ textarea {
 .leaflet-container {
   min-height: 100%;
   width: 100%;
+  font-family: inherit;
+}
+
+.map-canvas.leaflet-container {
+  min-height: 280px;
+  border-radius: 1rem;
+  z-index: 0;
+}
+
+.map-panel {
+  background: linear-gradient(145deg, #f8fafc 0%, #fff7ed 100%);
+}
+
+.dark .map-panel {
+  background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+}
+
+.map-loading-overlay {
+  @apply absolute inset-0 z-[500] flex flex-col items-center justify-center gap-3 rounded-2xl bg-white/75 backdrop-blur-sm dark:bg-slate-950/75;
+}
+
+.map-zoom-toolbar {
+  @apply absolute right-3 top-3 z-[400] flex flex-col gap-1.5;
+}
+
+.map-zoom-btn {
+  @apply grid h-9 w-9 place-items-center rounded-lg border border-slate-200/90 bg-white/95 text-slate-700 shadow-md backdrop-blur transition hover:border-saffron hover:text-saffron disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-600 dark:bg-slate-900/95 dark:text-slate-200 dark:hover:border-orange-400 dark:hover:text-orange-300;
+}
+
+.map-marker {
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.map-marker--search {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px 9999px 9999px 0;
+  rotate: -45deg;
+  background: linear-gradient(135deg, #0f766e, #007a7a);
+  color: #fff;
+}
+
+.map-marker--search svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  rotate: 45deg;
+}
+
+.map-marker--place {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #ff7a1a, #ea580c);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.map-marker--place span {
+  line-height: 1;
+}
+
+.map-marker--selected {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px rgba(255, 122, 26, 0.35), 0 10px 24px rgba(15, 23, 42, 0.35);
+  z-index: 1000;
+}
+
+.map-marker-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.map-legend-dot {
+  @apply h-3 w-3 shrink-0 rounded-full;
+}
+
+.map-legend-dot--search {
+  background: linear-gradient(135deg, #0f766e, #007a7a);
+}
+
+.map-legend-dot--place {
+  @apply bg-saffron;
+}
+
+.leaflet-popup-content-wrapper {
+  @apply rounded-xl shadow-lg;
+}
+
+.leaflet-popup-content {
+  @apply m-3 text-sm leading-6;
 }
 
 @media (prefers-reduced-motion: reduce) {

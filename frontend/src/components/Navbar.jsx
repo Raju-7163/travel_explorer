@@ -50,7 +50,14 @@ export default function Navbar() {
         <div className="hidden items-center gap-8 md:flex">
           <NavLink
             to="/"
-            className="text-sm font-semibold text-slate-600 transition hover:text-forest dark:text-slate-300 dark:hover:text-white"
+            end
+            className={({ isActive }) =>
+              `text-sm font-semibold transition ${
+                isActive
+                  ? "text-forest dark:text-orange-200"
+                  : "text-slate-600 hover:text-forest dark:text-slate-300 dark:hover:text-white"
+              }`
+            }
           >
             Home
           </NavLink>
@@ -146,8 +153,15 @@ export default function Navbar() {
             <div className="mx-auto grid max-w-7xl gap-3">
               <NavLink
                 to="/"
+                end
                 onClick={() => setIsOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
+                className={({ isActive }) =>
+                  `rounded-md px-3 py-2 text-sm font-semibold ${
+                    isActive
+                      ? "bg-orange-50 text-saffron dark:bg-orange-950/40 dark:text-orange-200"
+                      : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
+                  }`
+                }
               >
                 Home
               </NavLink>

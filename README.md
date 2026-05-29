@@ -69,19 +69,21 @@ Also set a JWT secret:
 JWT_SECRET=replace_with_a_long_random_secret
 ```
 
-5. Add an OpenWeather API key to `backend/.env` for the place weather widget:
+5. Optional: add an OpenWeather API key to `backend/.env` for branded weather icons. If you skip this, the app uses the free Open-Meteo API automatically:
 
 ```text
-OPENWEATHER_API_KEY=replace_with_your_openweather_key
+OPENWEATHER_API_KEY=
 ```
 
-6. Optional: add an OpenTripMap API key to `frontend/.env` if you want to use OpenTripMap places. Without a key, the app uses Wikimedia's free no-key geosearch API.
+6. Create `frontend/.env` (or copy from `frontend/.env.example`). Development uses `/api`, which Vite proxies to the backend on port 5000.
+
+7. Optional: add an OpenTripMap API key to `frontend/.env` if you want to use OpenTripMap places. Without a key, the app uses Wikimedia's free no-key geosearch API.
 
 ```text
 VITE_OPENTRIPMAP_API_KEY=
 ```
 
-7. Run both apps:
+8. Run both apps:
 
 ```bash
 npm run dev

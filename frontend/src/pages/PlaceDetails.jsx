@@ -1,7 +1,9 @@
-import { ArrowLeft, ExternalLink, ImageOff, MapPin, Star } from "lucide-react";
+import { ExternalLink, ImageOff, MapPin, Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import AppLink from "../components/AppLink.jsx";
 import FavoriteButton from "../components/FavoriteButton.jsx";
+import PageBackButton from "../components/PageBackButton.jsx";
 import NearbyHotels from "../components/NearbyHotels.jsx";
 import WeatherWidget from "../components/WeatherWidget.jsx";
 import { getTouristPlaceDetails } from "../services/openTripMap.js";
@@ -58,10 +60,9 @@ export default function PlaceDetails() {
         <p className="rounded-lg border border-red-200 bg-red-50 p-5 font-semibold text-red-700 dark:border-red-500/30 dark:bg-red-950/50 dark:text-red-200">
           {error}
         </p>
-        <Link to="/" className="mt-6 inline-flex items-center gap-2 font-bold text-saffron">
-          <ArrowLeft size={18} />
+        <AppLink to="/" className="mt-6 inline-flex items-center gap-2 font-bold text-saffron">
           Back to homepage
-        </Link>
+        </AppLink>
       </div>
     );
   }
@@ -78,10 +79,7 @@ export default function PlaceDetails() {
         )}
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-950/20" />
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-          <Link to="/" className="inline-flex items-center gap-2 rounded-md bg-white/15 px-4 py-2 text-sm font-bold text-white backdrop-blur-xl">
-            <ArrowLeft size={18} />
-            Back
-          </Link>
+          <PageBackButton />
           <div className="mt-8 flex max-w-5xl flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
             <h1 className="max-w-4xl text-4xl font-extrabold text-white sm:text-6xl">{place.name}</h1>
             <FavoriteButton place={place} className="shrink-0" />
@@ -114,7 +112,12 @@ export default function PlaceDetails() {
             ) : null}
           </div>
 
-          <NearbyHotels coordinates={place.coordinates} />
+          <NearbyHotels
+            coordinates={{
+              latitude: Number(place.coordinates?.latitude),
+              longitude: Number(place.coordinates?.longitude)
+            }}
+          />
         </div>
 
         <aside className="space-y-6">

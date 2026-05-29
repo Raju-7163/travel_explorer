@@ -1,5 +1,5 @@
 import { Heart, Loader2, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
+import AppLink from "../components/AppLink.jsx";
 import TouristPlaceCard from "../components/TouristPlaceCard.jsx";
 import { useFavorites } from "../context/FavoritesContext.jsx";
 
@@ -19,13 +19,13 @@ export default function Favorites() {
               Your favorite tourist places
             </h1>
           </div>
-          <Link
+          <AppLink
             to="/"
             className="inline-flex items-center justify-center gap-2 rounded-md bg-slate-950 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
           >
             <MapPin size={17} />
             Explore more
-          </Link>
+          </AppLink>
         </div>
 
         {isLoading ? (
@@ -52,12 +52,12 @@ export default function Favorites() {
             <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-300">
               Save tourist places from search results or place details, then come back here to compare and plan.
             </p>
-            <Link
+            <AppLink
               to="/"
               className="mt-6 inline-flex items-center justify-center rounded-md bg-saffron px-4 py-3 text-sm font-bold text-white transition hover:bg-orange-600"
             >
               Find places
-            </Link>
+            </AppLink>
           </div>
         ) : null}
       </section>

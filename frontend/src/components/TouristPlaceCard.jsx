@@ -1,6 +1,6 @@
 import { Compass, ImageOff, MapPin, Star } from "lucide-react";
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import AppLink from "./AppLink.jsx";
 import FavoriteButton from "./FavoriteButton.jsx";
 
 function TouristPlaceCard({ place }) {
@@ -46,12 +46,12 @@ function TouristPlaceCard({ place }) {
             Lng {place.coordinates.longitude?.toFixed?.(4) || "N/A"}
           </span>
         </div>
-        <Link
+        <AppLink
           to={`/places/${place.xid}`}
           className="mt-5 inline-flex w-full items-center justify-center rounded-md bg-slate-950 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
         >
           View Details
-        </Link>
+        </AppLink>
       </div>
     </article>
   );

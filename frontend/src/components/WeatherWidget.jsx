@@ -8,9 +8,9 @@ export default function WeatherWidget({ coordinates }) {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
 
-  const latitude = coordinates?.latitude;
-  const longitude = coordinates?.longitude;
-  const hasCoordinates = latitude !== undefined && latitude !== null && longitude !== undefined && longitude !== null;
+  const latitude = Number(coordinates?.latitude);
+  const longitude = Number(coordinates?.longitude);
+  const hasCoordinates = Number.isFinite(latitude) && Number.isFinite(longitude);
 
   useEffect(() => {
     let isActive = true;
